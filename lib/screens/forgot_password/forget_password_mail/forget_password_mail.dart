@@ -15,6 +15,7 @@ class ForgotPasswordMail extends StatefulWidget {
 
 class _ForgotPasswordMailScreen extends State<ForgotPasswordMail> {
   final emailController = TextEditingController();
+  @override
   void dispose() {
     emailController.dispose();
     super.dispose();
@@ -24,7 +25,7 @@ class _ForgotPasswordMailScreen extends State<ForgotPasswordMail> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(
+      builder: (context) => const Center(
         child: CircularProgressIndicator(),
       ),
     );
@@ -51,8 +52,8 @@ class _ForgotPasswordMailScreen extends State<ForgotPasswordMail> {
           padding: const EdgeInsets.all(tDefaultSize),
           child: Column(
             children: [
-              SizedBox(height: tDefaultSize*4),
-              FormHeaderWidget(
+              const SizedBox(height: tDefaultSize*4),
+              const FormHeaderWidget(
                 image: tForgetPasswordImage,
                 title: tForgetPasswordTitle1,
                 subTitle: tForgetPasswordSubTitle1,
@@ -83,10 +84,10 @@ class _ForgotPasswordMailScreen extends State<ForgotPasswordMail> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 16, 90, 168)),
+                          backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 16, 90, 168)),
                         ),
                         onPressed: verifyEmail,
-                        child: Text(
+                        child: const Text(
                           tNext,
                           style: TextStyle(
                             color: Colors.white,

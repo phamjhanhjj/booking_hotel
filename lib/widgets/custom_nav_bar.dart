@@ -32,7 +32,7 @@ class CustomNavBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => const HomeScreen(),
                   ),
                 );
               },

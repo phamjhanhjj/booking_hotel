@@ -22,7 +22,7 @@ class ForgetPasswordScreen{
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgotPasswordMail()),
+                      MaterialPageRoute(builder: (context) => const ForgotPasswordMail()),
                     );
                   },
                   btnIcon: Icons.email,

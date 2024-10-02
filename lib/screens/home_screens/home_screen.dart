@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.blue,
-      bottomNavigationBar: CustomNavBar(index: 0),
+      bottomNavigationBar: const CustomNavBar(index: 0),
       body: SafeArea(
         bottom: false,
         child: Stack(
@@ -33,14 +33,14 @@ class HomeScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: size.height * 0.25),
               color: Colors.white,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     _HeaderSection(),
                     _SearchCard(),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     _NearbyHotels(),
                   ],
                 ),
@@ -84,7 +84,7 @@ class _HeaderSectionState extends State<_HeaderSection> {
           children:[
             CircleAvatar(
               radius: 25,
-              backgroundImage:_image != null ? MemoryImage(_image!) : AssetImage('assets/images/sign-in.png') as ImageProvider,
+              backgroundImage:_image != null ? MemoryImage(_image!) : const AssetImage('assets/images/sign-in.png') as ImageProvider,
             ),
             CustomIconButton(icon: SvgPicture.asset('assets/icon/notification.svg')),
           ],
@@ -163,16 +163,16 @@ class _SearchCard extends StatelessWidget {
 
 
 class _NearbyHotels extends ConsumerWidget {
-  const _NearbyHotels({super.key});
+  const _NearbyHotels();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hotels = ref.watch(allHotelsProvider);
     return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const[
+          children: [
             Text(
               'Nearby Hotels',
               style: TextStyle(
