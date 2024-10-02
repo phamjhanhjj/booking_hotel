@@ -15,8 +15,8 @@ class ForgetPasswordScreen{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(tForgetPasswordTitle, style:  Theme.of(context).textTheme.headline2,),
-                Text(tForgetPasswordSubTitle, style:  Theme.of(context).textTheme.bodyText2,),
+                Text(tForgetPasswordTitle, style:  Theme.of(context).textTheme.displayMedium,),
+                Text(tForgetPasswordSubTitle, style:  Theme.of(context).textTheme.bodyMedium,),
                 const SizedBox(height: 30),
                 ForgetPasswordBtnWidget(
                   onTap: () {
