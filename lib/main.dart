@@ -1,4 +1,3 @@
-
 import 'package:booking_hotel/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -39,5 +38,5 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
     );
- }
+  }
 }
