@@ -37,20 +37,20 @@ class CustomNavBar extends StatelessWidget {
                 );
               },
             ),
-             _NavBarIcon(
-              iconPath: 'assets/icon/map.svg',
-              text: 'Map',
-              isSelected: index == 1,
-              onTap: () async {
-                List<HotelModel> hotels = await parseJson();
-                Navigator.pushReplacement(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) =>WidgetMarkersScreen(hotels: hotels),
-                  ),
-                );
-              },
-            ),
+            //  _NavBarIcon(
+            //   iconPath: 'assets/icon/map.svg',
+            //   text: 'Map',
+            //   isSelected: index == 1,
+            //   onTap: () async {
+            //     List<HotelModel> hotels = await parseJson();
+            //     Navigator.pushReplacement(
+            //       context, 
+            //       MaterialPageRoute(
+            //         builder: (context) =>WidgetMarkersScreen(hotels: hotels),
+            //       ),
+            //     );
+            //   },
+            // ),
             _NavBarIcon(
               iconPath: 'assets/icon/booking.svg',
               text: 'Booking',

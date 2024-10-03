@@ -1,3 +1,5 @@
+import 'package:booking_hotel/screens/previewhotel/previewHotelScreen.dart';
+import 'package:booking_hotel/widgets/custom_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
