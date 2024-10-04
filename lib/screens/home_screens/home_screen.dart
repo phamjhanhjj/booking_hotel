@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:booking_hotel/providers/all_hotel_provider.dart';
+import 'package:booking_hotel/screens/profile_screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -81,10 +82,20 @@ class _HeaderSectionState extends State<_HeaderSection> {
       children:[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            CircleAvatar(
-              radius: 25,
-              backgroundImage:_image != null ? MemoryImage(_image!) : const AssetImage('assets/images/sign-in.png') as ImageProvider,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: _image != null
+                    ? MemoryImage(_image!)
+                    : const AssetImage('assets/images/sign-in.png') as ImageProvider,
+              ),
             ),
             CustomIconButton(icon: SvgPicture.asset('assets/icon/notification.svg')),
           ],

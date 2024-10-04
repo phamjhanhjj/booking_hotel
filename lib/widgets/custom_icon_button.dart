@@ -1,3 +1,4 @@
+import 'package:booking_hotel/screens/booking_screens/history_booking.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -20,7 +21,16 @@ class CustomIconButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: IconButton(
-        onPressed: onPressed,
+        onPressed: () {
+          if (onPressed != null) {
+            onPressed!();
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BookingScreen()),
+            );
+          }
+        },
         icon: icon,
       ),
     );

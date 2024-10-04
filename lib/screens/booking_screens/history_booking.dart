@@ -14,7 +14,7 @@ class BookingScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       bottomNavigationBar: const CustomNavBar(index: 2),
-      body: BookingList(),
+      body: const BookingList(),
     );
   }
 }

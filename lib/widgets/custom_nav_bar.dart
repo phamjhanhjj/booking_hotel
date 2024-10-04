@@ -59,7 +59,7 @@ class CustomNavBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) =>BookingScreen(),
+                    builder: (context) =>const BookingScreen(),
                   ),
                 );
               },
@@ -72,7 +72,7 @@ class CustomNavBar extends StatelessWidget {
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) =>ProfileScreen(),
+                    builder: (context) =>const ProfileScreen(),
                   ),
                 );
               },

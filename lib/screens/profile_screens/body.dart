@@ -11,7 +11,10 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ProfilePic(),
+        Padding(
+          padding: const EdgeInsets.only(top: 20.0), // Adjust this value to move ProfilePic down
+          child: ProfilePic(),
+        ),
         const SizedBox(height: 20),
         ProfileMenu(
           icon: Icons.person,
