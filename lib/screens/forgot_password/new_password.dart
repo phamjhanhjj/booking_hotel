@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../forget_password_mail/Utils.dart';
+import 'Utils.dart';
 
 class NewPassword extends StatefulWidget {
   const NewPassword({super.key});

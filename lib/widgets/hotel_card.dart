@@ -1,10 +1,9 @@
-import 'package:booking_hotel/screens/previewhotel/previewHotelScreen.dart';
-import 'package:booking_hotel/widgets/custom_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../models/hotel_model.dart';
+import '../screens/previewhotel/previewHotelScreen.dart';
 import 'app_text.dart';
+import 'custom_rating.dart';
 
 class HotelCard extends StatelessWidget {
   final HotelModel hotel;

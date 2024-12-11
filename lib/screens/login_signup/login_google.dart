@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../home_screens/home_screen.dart';
 
 class LoginGoogle extends StatefulWidget {
   const LoginGoogle({super.key});
-
+  
   @override
   // ignore: library_private_types_in_public_api
   _LoginGoogleState createState() => _LoginGoogleState();
 }
 
 class _LoginGoogleState extends State<LoginGoogle> {
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 

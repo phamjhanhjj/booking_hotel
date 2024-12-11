@@ -1,7 +1,6 @@
 import 'package:clippy_flutter/clippy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-
 import '../../models/hotel_model.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_rating.dart';

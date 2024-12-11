@@ -1,14 +1,157 @@
+// import 'package:flutter/material.dart';
+//
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({super.key});
+//
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+//
+// class _HomeScreenState extends State<HomeScreen> {
+//   int _currentIndex = 0; 
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         body: Container(
+//           color: Colors.blue,
+//           child: Padding(
+//             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+//             child: Column(
+//               children: [
+//                 _buildAppHeader(),
+//                 _buildWelcomeText(),  
+//                 _buildTravelInfoCard(),            
+//               ],
+//             ),
+//           ),
+//         ),
+//         bottomNavigationBar: BottomNavigationBar(
+//           currentIndex: _currentIndex, 
+//           selectedItemColor: Colors.blue, 
+//           unselectedItemColor: Colors.grey,
+//           items: [
+//             _buildBottomNavItem(Icons.home, "Home"),
+//             _buildBottomNavItem(Icons.map, "Map"),
+//             _buildBottomNavItem(Icons.book, "Booking"),
+//             _buildBottomNavItem(Icons.person, "Profile"),
+//           ],
+//           onTap: (int itemIndex) {
+//             setState(() {
+//               _currentIndex = itemIndex;
+//             });
+//             List<String> itemLabels = ["Home", "Map", "Booking", "Profile"];
+//             print(itemLabels[itemIndex]);
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// BottomNavigationBarItem _buildBottomNavItem(IconData icon, String label) {
+//   return BottomNavigationBarItem(
+//     icon: Icon(icon),
+//     label: label,
+//   );
+// }
+//
+// Widget _buildAppHeader() {
+//   return Padding(
+//     padding: const EdgeInsets.only(bottom: 8.0),
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+//       children: [
+//         Container(
+//           padding: EdgeInsets.all(5.0),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(90.0),
+//           ),
+//           child: IconButton(
+//             icon: Icon(Icons.person, size: 30.0),
+//             onPressed: () {
+//               print('Person icon pressed');
+//             },
+//           ),
+//         ),
+//         Container(
+//           padding: EdgeInsets.all(5.0),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(90.0),
+//           ),
+//           child: IconButton(
+//             icon: Icon(Icons.notifications, size: 30.0),
+//             onPressed: () {
+//               print('Notifications icon pressed');
+//             },
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+//
+// Widget _buildWelcomeText() {
+//   return const Padding(
+//     padding: EdgeInsets.only(bottom: 8.0),
+//     child: Align(
+//       alignment: Alignment.centerLeft,
+//       child: Text(
+//         "Welcome!",
+//         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+//       ),
+//     ),
+//   );
+// }
+//
+// Widget _buildTravelInfoCard() {
+//   return Container(
+//     color: Colors.white,
+//     padding: EdgeInsets.all(16.0),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Row 1 - Left",
+//               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+//             ),
+//             Text(
+//               "Row 1 - Right",
+//               style: TextStyle(fontSize: 16.0),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 16.0),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Row 2 - Left",
+//               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+//             ),
+//             Text(
+//               "Row 2 - Right",
+//               style: TextStyle(fontSize: 16.0),
+//             ),
+//           ],
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
 import 'dart:typed_data';
-import 'dart:ui';
-
-import 'package:booking_hotel/providers/all_hotel_provider.dart';
-import 'package:booking_hotel/screens/profile_screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-
+import '../../providers/all_hotel_provider.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/custom_nav_bar.dart';
@@ -82,20 +225,10 @@ class _HeaderSectionState extends State<_HeaderSection> {
       children:[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-              },
-              child: CircleAvatar(
-                radius: 25,
-                backgroundImage: _image != null
-                    ? MemoryImage(_image!)
-                    : const AssetImage('assets/images/sign-in.png') as ImageProvider,
-              ),
+          children:[
+            CircleAvatar(
+              radius: 25,
+              backgroundImage:_image != null ? MemoryImage(_image!) : const AssetImage('assets/images/sign-in.png') as ImageProvider,
             ),
             CustomIconButton(icon: SvgPicture.asset('assets/icon/notification.svg')),
           ],
@@ -118,6 +251,7 @@ class _SearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
     final LocationTextController = TextEditingController();
     final dateFromTextController = TextEditingController();
     final dateToTextController = TextEditingController();
@@ -141,6 +275,7 @@ class _SearchCard extends StatelessWidget {
         children:[
           Row(
             children:[
+              // ignore: deprecated_member_use
               SvgPicture.asset('assets/icon/location.svg', color: Colors.blue),
               const SizedBox(width: 20,),
               CustomTextField(
@@ -152,6 +287,7 @@ class _SearchCard extends StatelessWidget {
           const Divider(),
           Row(
             children:[
+              // ignore: deprecated_member_use
               SvgPicture.asset('assets/icon/calendar.svg', color: Colors.blue),
               const SizedBox(width: 20,),
               CustomTextField(

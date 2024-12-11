@@ -1,7 +1,7 @@
-import 'package:booking_hotel/screens/forgot_password/forget_password_mail/Utils.dart';
-import 'package:booking_hotel/screens/forgot_password/forget_password_phone/new_password.dart';
+import 'Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'new_password.dart';
 
 class MyOtp extends StatefulWidget {
   final String verificationId;

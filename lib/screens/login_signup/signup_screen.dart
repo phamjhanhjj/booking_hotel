@@ -1,10 +1,11 @@
-import 'package:booking_hotel/screens/login_signup/login_screen.dart';
 import 'package:flutter/material.dart';
+import '../../reusable_widgets/reusable_widget.dart';
+import '../../utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:booking_hotel/reusable_widgets/reusable_widget.dart';
+import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -14,21 +15,111 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _userNameTextController = TextEditingController();
-  bool isValidPassword(String password) {
-    if (password.length < 8) {
-      return false;
-    }
-    if (!password.contains(RegExp(r'[a-z]'))) {
-      return false;
-    }
-    if (!password.contains(RegExp(r'[A-Z]'))) {
-      return false;
-    }
-    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return false;
-    }
-    return true;
+  final _formKey = GlobalKey<FormState>();
+
+  Widget _buildFormSignIn(){
+    return Form(
+      key: _formKey, 
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Center(
+            child: CircleAvatar(
+              radius: 64,
+              backgroundImage: AssetImage("assets/images/sign-in.png"),
+            ),
+          ),
+          const SizedBox(height: 20),
+          _buildEmailTF(),
+          const SizedBox(height: 20),
+          _buildPasswordTF(),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+  Widget _buildEmailTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Email',
+          style: kLabelStyle,
+        ),
+        const SizedBox(height: 10),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60,
+          child: TextFormField(
+            controller: _emailTextController,
+            keyboardType: TextInputType.emailAddress,
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Email',
+              hintStyle: kHintTextStyle,
+            ),
+            validator: (String? value){
+              if (value == null || value.isEmpty) return "Please enter your email";
+              final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+              if (!emailValid) return "Email is invalid";
+              return null;
+            },
+          )
+        ),
+      ],
+    );
+  }
+  Widget _buildPasswordTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Password',
+          style: kLabelStyle,
+        ),
+        const SizedBox(height: 10),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60,
+          child: TextFormField(
+            controller: _passwordTextController,
+            obscureText: true,
+            keyboardType: TextInputType.emailAddress,
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Password',
+              hintStyle: kHintTextStyle,
+            ),
+            validator: (String? value){
+              if (value == null || value.isEmpty) return "Please enter your password";
+              if (value.length < 6) return "Your password needs to be atleast 6 characters";
+              return null;
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -64,114 +155,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 64,
-                      backgroundImage: AssetImage("assets/images/sign-in.png"),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF73AEF5),
-                        Color(0xFF61A4F1),
-                        Color(0xFF478DE0),
-                        Color(0xFF398AE5),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: reusableTextField("Enter Username",
-                        Icons.person_outline, false, _userNameTextController),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF73AEF5),
-                        Color(0xFF61A4F1),
-                        Color(0xFF478DE0),
-                        Color(0xFF398AE5),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: reusableTextField("Enter Email Address",
-                        Icons.email_outlined, false, _emailTextController),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF73AEF5),
-                        Color(0xFF61A4F1),
-                        Color(0xFF478DE0),
-                        Color(0xFF398AE5),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: <Widget>[
-                        reusableTextField("Enter Password", Icons.lock_outline,
-                            true, _passwordTextController),
-                        const Text(
-                          "*Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one special character.",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                _buildFormSignIn(),
                 const SizedBox(height: 20),
                 signInSignUpButton(context, false, () {
-                  if (!isValidPassword(_passwordTextController.text)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'Invalid password. Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one special character.'),
-                      ),
-                    );
-                    return;
+                  final formState = _formKey.currentState;
+                  if (formState!.validate()){
+                    formState.save();
+                    FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text).then((value) {
+                        print("Created New Account");
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      }).onError((error, stackTrace) {
+                        print("Error ${error.toString()}");
+                      });
                   }
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                          email: _emailTextController.text,
-                          password: _passwordTextController.text)
-                      .then((value) {
-                    print("Created New Account");
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
-                  }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
-                  });
                 })
               ],
             ),

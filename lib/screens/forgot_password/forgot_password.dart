@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:booking_hotel/screens/forgot_password/foget_password_options/forget_password_btn_widget.dart';
-import 'package:booking_hotel/screens/forgot_password/forget_password_mail/forget_password_mail.dart';
-import 'package:booking_hotel/utilities/constants.dart';
+import '../../utilities/constants.dart';
+import 'forget_password_btn_widget.dart';
+import 'forgot_password_phone.dart';
+import 'forget_password_mail.dart';
 
 class ForgetPasswordScreen{
     static Future<dynamic> buildShowModalBottomSheet(BuildContext context) {
@@ -29,19 +30,19 @@ class ForgetPasswordScreen{
                   title:tEmail,
                   subTitle: tRestViaEMail,
                 ),
-                // const SizedBox(height: 20),
+                const SizedBox(height: 20),
                 
-                // ForgetPasswordBtnWidget(
-                //   btnIcon: Icons.phone_rounded,
-                //   title:tPhoneNo,
-                //   subTitle: tRestViaPhone,
-                //   onTap: (){
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => ForgotPasswordPhone()),
-                //     );
-                //   },
-                // ),
+                ForgetPasswordBtnWidget(
+                  btnIcon: Icons.phone_rounded,
+                  title:tPhoneNo,
+                  subTitle: tRestViaPhone,
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPasswordPhone()),
+                    );
+                  },
+                ),
                 ],
               ),
           ),

@@ -1,49 +1,45 @@
-import 'package:booking_hotel/screens/forgot_password/forget_password_mail/Utils.dart';
-import 'package:booking_hotel/screens/forgot_password/forget_password_phone/send_otp.dart';
 import 'package:flutter/material.dart';
-import 'package:booking_hotel/comon_widgets/form/form_header_widget.dart';
-import 'package:booking_hotel/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'Utils.dart';
+import 'form_header_widget.dart';
+import 'package:email_validator/email_validator.dart';
+import '../../utilities/constants.dart';
 
-class ForgotPasswordPhone extends StatefulWidget {
-  const ForgotPasswordPhone({Key? key}) : super(key: key);
+class ForgotPasswordMail extends StatefulWidget {
+  const ForgotPasswordMail({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _ForgotPasswordPhoneScreen createState() => _ForgotPasswordPhoneScreen();
+  _ForgotPasswordMailScreen createState() => _ForgotPasswordMailScreen();
 }
 
-class _ForgotPasswordPhoneScreen extends State<ForgotPasswordPhone> {
-  final phoneController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
 
-  bool isValidPhoneNumber(String? input) {
-    final RegExp regex = RegExp(r'^\+?[1-9]\d{1,14}$');
-    return (input != null && regex.hasMatch(input));
+class _ForgotPasswordMailScreen extends State<ForgotPasswordMail> {
+  final emailController = TextEditingController();
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
   }
 
-  void verifyPhone() async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneController.text,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await _auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          Utils.showSnackBar('The provided phone number is not valid', context);
-        }
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyOtp(verificationId: verificationId),
-          ),
-        );
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-      },
+  Future<void> verifyEmail() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
+    try{
+      await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: emailController.text.trim());
+      Utils.showSnackBar('Password Reset Email Sent', context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Utils.showSnackBar(e.message ?? 'An error occurred', context);
+      Navigator.of(context).pop();  
+    }
   }
 
   @override
@@ -71,17 +67,17 @@ class _ForgotPasswordPhoneScreen extends State<ForgotPasswordPhone> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: phoneController,
+                      controller: emailController,
                       cursorColor: Colors.white,
                       textInputAction: TextInputAction.done,
                       decoration: const InputDecoration(
-                        label: Text(tPhone),
-                        hintText: tPhone,
-                        prefixIcon: Icon(Icons.phone, color: Colors.white),
+                        label: Text(tEmail),
+                        hintText: tEmail,
+                        prefixIcon: Icon(Icons.email, color: Colors.white),
                       ),
-                      validator: (phone) => 
-                        phone != null && !isValidPhoneNumber(phone)
-                          ? 'Enter a valid phone'
+                      validator: (email) => 
+                        email != null && !EmailValidator.validate(email)
+                          ? 'Enter a valid email'
                           : null,
                     ),
                     const SizedBox(height: 20),
@@ -91,7 +87,7 @@ class _ForgotPasswordPhoneScreen extends State<ForgotPasswordPhone> {
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 16, 90, 168)),
                         ),
-                        onPressed: verifyPhone,
+                        onPressed: verifyEmail,
                         child: const Text(
                           tNext,
                           style: TextStyle(

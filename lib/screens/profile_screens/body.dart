@@ -1,8 +1,8 @@
-import 'package:booking_hotel/screens/profile_screens/log_out.dart';
-import 'package:booking_hotel/screens/profile_screens/profile_pic.dart';
 import 'package:flutter/material.dart';
-
 import '../FeatureInProgress/featureIn_progress.dart';
+import 'log_out.dart';
+import 'my_account_screen.dart';
+import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -11,20 +11,21 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0), // Adjust this value to move ProfilePic down
-          child: ProfilePic(),
-        ),
+        const ProfilePic(),
         const SizedBox(height: 20),
         ProfileMenu(
           icon: Icons.person,
           text: 'My Account',
           press: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return FeatureInProgressWidget();
-              },
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return const FeatureInProgressWidget();
+            //   },
+            // );
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyAccountScreen()),
             );
           },
         ),
@@ -36,7 +37,7 @@ class Body extends StatelessWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return FeatureInProgressWidget();
+                return const FeatureInProgressWidget();
               },
             );
           },
@@ -49,7 +50,7 @@ class Body extends StatelessWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return FeatureInProgressWidget();
+                return const FeatureInProgressWidget();
               },
             );
           },
@@ -62,7 +63,7 @@ class Body extends StatelessWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return FeatureInProgressWidget();
+                return const FeatureInProgressWidget();
               },
             );
           },

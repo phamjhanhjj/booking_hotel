@@ -10,6 +10,7 @@ class BookingDialog extends StatefulWidget {
   const BookingDialog({super.key, required this.hotel});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BookingDialogState createState() => _BookingDialogState();
 }
 class _BookingDialogState extends State<BookingDialog> {
@@ -143,6 +144,7 @@ class _BookingDialogState extends State<BookingDialog> {
                     ),
                   );
                   Future.delayed(const Duration(seconds: 1), () {
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   });
                 }

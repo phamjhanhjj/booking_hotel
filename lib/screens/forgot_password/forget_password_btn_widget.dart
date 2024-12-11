@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
+
 class ForgetPasswordBtnWidget extends StatelessWidget {
-  const ForgetPasswordBtnWidget({
-    Key? key,
-    required this.btnIcon,
-    required this.title,
-    required this.subTitle,
-    required this.onTap,
-  }) : super(key: key);
+  const ForgetPasswordBtnWidget({super.key, required this.btnIcon, required this.title, required this.subTitle, required this.onTap, });
 
   final IconData btnIcon;
   final String title, subTitle;

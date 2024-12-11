@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../gen/fonts.gen.dart';
 import '../models/hotel_model.dart';
 import '../screens/booking_screens/history_booking.dart';
@@ -44,6 +43,7 @@ class CustomNavBar extends StatelessWidget {
               onTap: () async {
                 List<HotelModel> hotels = await parseJson();
                 Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
                   context, 
                   MaterialPageRoute(
                     builder: (context) =>WidgetMarkersScreen(hotels: hotels),

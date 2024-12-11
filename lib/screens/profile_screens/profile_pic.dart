@@ -1,55 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
-class ProfilePic extends StatefulWidget {
-  @override
-  _ProfilePicState createState() => _ProfilePicState();
-}
-
-class _ProfilePicState extends State<ProfilePic> {
-  File? _image;
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  }
+class ProfilePic extends StatelessWidget {
+  const ProfilePic({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Align(
+      alignment: Alignment.topCenter,
       child: SizedBox(
-        height: 100,
-        width: 100,
+        height: 115,
+        width: 115,
         child: Stack(
           fit: StackFit.expand,
           clipBehavior: Clip.none,
           children: [
-            CircleAvatar(
-              backgroundImage: _image != null ? FileImage(_image!) : null,
-              child: _image == null ? Icon(Icons.person, size: 50) : null,
+            const CircleAvatar(
+              backgroundImage: AssetImage("assets/images/sign-in.png"),
             ),
             Positioned(
-              right: -16,
-              bottom: 0,
+              right: -6,
+              bottom: 10,
               child: SizedBox(
                 height: 46,
                 width: 46,
                 child: TextButton(
                   style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                       side: const BorderSide(color: Colors.white),
                     ),
                     backgroundColor: const Color(0xFFF5F6F9),
                   ),
-                  onPressed: _pickImage,
+                  onPressed: () {},
                   child: const Icon(Icons.add_a_photo),
                 ),
               ),

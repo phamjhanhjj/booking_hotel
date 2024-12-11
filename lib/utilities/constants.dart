@@ -24,7 +24,6 @@ const kHintTextStyle = TextStyle(
 );
 
 const double tFromHeight = 20;
-
 const double tDefaultSize = 20.0;
 const String tForgetPasswordTitle = 'Make Selections!';
 const String tForgetPasswordSubTitle = 'Select the options below to reset your password';
@@ -33,10 +32,7 @@ const String tPhone = 'Phone';
 const String tRestViaEMail = 'Reset via E-Mail Verification';
 const String tRestViaPhone = 'Reset via Phone Verification';
 const String tPhoneNo = 'Phone No';
-
 const String tForgetPasswordImage = 'assets/images/forget_password.png';
-
 const String tForgetPasswordTitle1 = 'Forget Password';
 const String tForgetPasswordSubTitle1 = 'Select one of the options given below to reset your password.';
-
 const String tNext = 'Reset Password';

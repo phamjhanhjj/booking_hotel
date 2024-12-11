@@ -1,11 +1,8 @@
 import 'dart:ui' as ui;
 import 'dart:async';
-
 import 'package:booking_hotel/screens/map_screens/show_hotel_dialog.dart';
 import 'package:booking_hotel/widgets/custom_nav_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../models/hotel_model.dart';
 
@@ -69,6 +66,7 @@ class _WidgetMarkersScreenState extends State<WidgetMarkersScreen> {
     final picture = pictureRecorder.endRecording();
     final image = await picture.toImage(rectWidth.toInt(), 100);
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    // ignore: deprecated_member_use
     final bitmapDescriptor = BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
 
     return Marker(

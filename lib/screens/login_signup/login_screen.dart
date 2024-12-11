@@ -1,13 +1,14 @@
-import 'package:booking_hotel/screens/login_signup/login_facebook.dart';
-import 'package:booking_hotel/screens/login_signup/login_google.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:booking_hotel/utilities/constants.dart';
-import 'package:booking_hotel/screens/forgot_password/foget_password_options/forget_password_model_bottom_sheet.dart';
-import 'package:booking_hotel/screens/login_signup/signup_screen.dart';
-import 'package:booking_hotel/screens/home_screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../home_screens/home_screen.dart';
+import 'login_facebook.dart';
+import '../forgot_password/forgot_password.dart';
+import 'login_google.dart';
+import 'signup_screen.dart';
+import '../../utilities/constants.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen>{
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   bool _rememberMe = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -49,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen>{
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: _emailTextController,
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
@@ -66,7 +68,13 @@ class _LoginScreenState extends State<LoginScreen>{
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
-          ),
+            validator: (String? value){
+              if (value == null || value.isEmpty) return "Please enter your email";
+              final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+              if (!emailValid) return "Email is invalid";
+              return null;
+            },
+          )
         ),
       ],
     );
@@ -85,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen>{
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: _passwordTextController,
             obscureText: true,
             keyboardType: TextInputType.emailAddress,
@@ -103,9 +111,30 @@ class _LoginScreenState extends State<LoginScreen>{
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
+            validator: (String? value){
+              if (value == null || value.isEmpty) return "Please enter your password";
+              if (value.length < 6) return "Your password needs to be atleast 6 characters";
+              return null;
+            },
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildFormLogin(){
+    return Form(
+      key: _formKey, 
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 30),
+          _buildEmailTF(),
+          const SizedBox(height: 30),
+          _buildPasswordTF(),
+        ],
+      ),
     );
   }
 
@@ -125,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen>{
     );
   }
 
-Widget _buildRememberMeCheckbox() {
+  Widget _buildRememberMeCheckbox() {
   return SizedBox(
     height: 20,
     child: Row(
@@ -172,24 +201,24 @@ Widget _buildRememberMeCheckbox() {
           ),
         ),
         onPressed: () async {
-          try {
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: _emailTextController.text,
-              password: _passwordTextController.text,
-            );
-          Navigator.push(
-            // ignore: use_build_context_synchronously
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-          );
-        } on FirebaseAuthException catch (e) {
-            if (e.code == 'user-not-found') {
-              // ignore: avoid_print
-              print('No user found for that email.');
-            } else if (e.code == 'wrong-password') {
-              // ignore: avoid_print
-              print('Wrong password provided for that user.');
-            }
+          final formState = _formKey.currentState;
+          if (formState!.validate()){
+            formState.save();
+            try {
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: _emailTextController.text,
+                  password: _passwordTextController.text,
+                );
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()),);
+            } on FirebaseAuthException catch (e) {
+                if (e.code == 'user-not-found') {
+                  // ignore: avoid_print
+                  print('No user found for that email.');
+                } else if (e.code == 'wrong-password') {
+                  // ignore: avoid_print
+                  print('Wrong password provided for that user.');
+                }
+              }
           }
         },
         child: const Text(
@@ -205,6 +234,7 @@ Widget _buildRememberMeCheckbox() {
       ),
     );
   }
+
   Widget _buildSignInWithText(){
     return const Column(
       children: <Widget>[
@@ -248,7 +278,7 @@ Widget _buildRememberMeCheckbox() {
     );
   }
 
-Widget _buildSocialBtnRow(BuildContext context) {
+  Widget _buildSocialBtnRow(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 30),
     child: Row(
@@ -354,10 +384,7 @@ Widget _buildSocialBtnRow(BuildContext context) {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      _buildEmailTF(),
-                      const SizedBox(height: 30),
-                      _buildPasswordTF(),
+                      _buildFormLogin(),
                       _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),

@@ -1,7 +1,7 @@
-import 'package:booking_hotel/screens/previewhotel/hotel_details.dart';
 import 'package:flutter/material.dart';
 import '../../models/hotel_model.dart';
 import 'booking_dialog.dart';
+import 'hotel_details.dart';
 
 class PreviewHotelScreen extends StatefulWidget {
   final HotelModel hotel;
@@ -11,6 +11,7 @@ class PreviewHotelScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _PreviewHotelScreenState createState() => _PreviewHotelScreenState();
 }
 
@@ -46,7 +47,7 @@ class _PreviewHotelScreenState extends State<PreviewHotelScreen> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Text(
+          child: const Text(
             'Book now',
             style: TextStyle(
               color: Colors.white,
